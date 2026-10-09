@@ -118,6 +118,8 @@ def safe_reply(
         return reply
 
     logger.warning("Guardrail blocked reply (attempt 1). Reasons: %s", reasons)
+    # Record the block even if the retry comes back clean, so it is counted.
+    _last_leak_log = {"leak_blocked": True, "reasons": reasons}
 
     if max_retries > 0:
         # Retry: generate_fn doesn't accept arguments, so the caller is

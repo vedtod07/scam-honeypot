@@ -116,14 +116,16 @@ with st.sidebar:
     # Mode detection
     has_llm = _has_llm_env()
     if not has_llm:
-        st.info("🔌 No LLM env vars found — forcing **Replay** mode.\nSet `LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL` to enable Live mode.")
-        mode_options = ["Replay cached demo"]
-        selected_mode = "Replay cached demo"
+        st.info("No LLM env vars found - Live (LLM) is disabled. Set LLM_BASE_URL, LLM_API_KEY, LLM_MODEL to enable it. The offline simulator needs no key.")
+        mode_options = ["Replay cached demo", "Offline simulator (no LLM)"]
     else:
-        mode_options = ["Live (LLM)", "Replay cached demo"]
-        selected_mode = st.radio("Mode", mode_options)
+        mode_options = ["Live (LLM)", "Replay cached demo", "Offline simulator (no LLM)"]
+    selected_mode = st.radio("Mode", mode_options)
+    if selected_mode.startswith("Offline"):
+        st.caption("Rule-based persona and scammer; time wasted is simulated. Tests the pipeline, not an LLM.")
 
-    mode = "live" if selected_mode == "Live (LLM)" else "replay"
+    mode = "replay" if selected_mode.startswith("Replay") else "live"
+    offline_mode = selected_mode.startswith("Offline")
 
     st.divider()
     scam_type_label = st.selectbox(
@@ -196,14 +198,19 @@ if start_btn and not st.session_state.is_running and not st.session_state.is_don
             st.session_state.start_time = time.time()
             st.session_state.is_running = True
             with st.spinner("Running conversation..."):
-                result = agents.run_conversation(st.session_state.scam_type)
+                result = agents.run_conversation(
+                    st.session_state.scam_type, offline=offline_mode,
+                    seed=int(time.time()) % 1000 if offline_mode else 0)
             st.session_state.result = result
             st.session_state.history = result["history"]
             st.session_state.indicators = result["indicators"]
             st.session_state.signals = result["signals"]
             st.session_state.leaks_blocked = result["leaks_blocked"]
             st.session_state.turns = result["turns"]
-            st.session_state.end_time = time.time()
+            st.session_state.end_time = (
+                st.session_state.start_time + result["time_wasted_seconds"]
+                if result.get("simulated") else time.time()
+            )
             st.session_state.is_done = True
             st.session_state.is_running = False
             st.session_state.end_reason = result["end_reason"]

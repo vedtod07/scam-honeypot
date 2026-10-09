@@ -1,0 +1,78 @@
+{
+  "mode": "offline",
+  "runs_per_script": 5,
+  "rows": [
+    {
+      "script": "digital_arrest",
+      "runs": 5,
+      "crashes": 0,
+      "avg_turns": 14.0,
+      "avg_time_s": 712.7,
+      "upi_recall": 1.0,
+      "phone_recall": 1.0,
+      "url_recall": 1.0,
+      "acct_recall": 1.0,
+      "precision": 1.0,
+      "full_capture_rate": 1.0,
+      "avg_turns_to_full_capture": 8.0,
+      "leaks_blocked": 11,
+      "end_reasons": {
+        "max_turns": 5
+      }
+    },
+    {
+      "script": "kyc",
+      "runs": 5,
+      "crashes": 0,
+      "avg_turns": 14.0,
+      "avg_time_s": 712.7,
+      "upi_recall": null,
+      "phone_recall": 1.0,
+      "url_recall": 1.0,
+      "acct_recall": null,
+      "precision": 1.0,
+      "full_capture_rate": 1.0,
+      "avg_turns_to_full_capture": 4.0,
+      "leaks_blocked": 11,
+      "end_reasons": {
+        "max_turns": 5
+      }
+    },
+    {
+      "script": "courier",
+      "runs": 5,
+      "crashes": 0,
+      "avg_turns": 14.0,
+      "avg_time_s": 712.7,
+      "upi_recall": 1.0,
+      "phone_recall": 1.0,
+      "url_recall": 1.0,
+      "acct_recall": null,
+      "precision": 1.0,
+      "full_capture_rate": 1.0,
+      "avg_turns_to_full_capture": 6.0,
+      "leaks_blocked": 11,
+      "end_reasons": {
+        "max_turns": 5
+      }
+    },
+    {
+      "script": "upi_collect",
+      "runs": 5,
+      "crashes": 0,
+      "avg_turns": 14.0,
+      "avg_time_s": 712.7,
+      "upi_recall": 1.0,
+      "phone_recall": 1.0,
+      "url_recall": null,
+      "acct_recall": null,
+      "precision": 1.0,
+      "full_capture_rate": 1.0,
+      "avg_turns_to_full_capture": 4.0,
+      "leaks_blocked": 11,
+      "end_reasons": {
+        "max_turns": 5
+      }
+    }
+  ]
+}

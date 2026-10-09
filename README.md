@@ -108,6 +108,8 @@ pytest -q
 ```
 
 ### Evaluation
+
+See [CHANGES.md](CHANGES.md) for what was modified after the initial build.
 ```bash
 python eval.py --runs 3
 ```
@@ -116,16 +118,14 @@ python eval.py --runs 3
 
 ## Evaluation
 
-> **Status: full LLM eval (`python eval.py`) has NOT been run yet** — it needs LLM credentials, so turns/time are blank and `eval_results.json` does not exist. The recall/precision values below are NOT from `eval.py`: they come from the offline pytest check that regex extraction recovers each script's planted indicators from a synthetic message (so they are expected to be 1.0 and say nothing about LLM conversations). Replace this table with `eval.py` output before submitting. Results prove pipeline and extraction correctness — not real-world efficacy (the scammer is our own LLM following our own script).
+> **Offline results (5 runs/script, seeds 0-4), produced by `python eval.py --runs 5 --offline`.** The persona and scammer here are the rule-based simulator in `offline.py`, not LLMs, and "time" is simulated, so these numbers show the extraction/guardrail/loop pipeline works - not LLM or real-world performance. `n/a` = that script plants no indicator of that type. The live-LLM eval (`python eval.py`) has not been run yet; replace this table with its output when it is.
 
-| script | runs | crashes | avg turns | avg time (s) | UPI recall | phone recall | URL recall | account recall | precision (all fields) | leaks blocked |
-|---|---|---|---|---|---|---|---|---|---|---|
-| digital_arrest | 3 | 0 | — | — | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 0 |
-| kyc | 3 | 0 | — | — | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 0 |
-| courier | 3 | 0 | — | — | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 0 |
-| upi_collect | 3 | 0 | — | — | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | 0 |
-
-*(Run `python eval.py` with LLM env vars set to generate real turn/time metrics.)*
+| script | runs | crashes | avg turns | avg time (s) | UPI recall | phone recall | URL recall | account recall | precision (all fields) | full capture | turns to full capture | leaks blocked |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| digital_arrest | 5 | 0 | 14.0 | 712.7 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 100% | 8.0 | 11 |
+| kyc | 5 | 0 | 14.0 | 712.7 | n/a | 1.00 | 1.00 | n/a | 1.00 | 100% | 4.0 | 11 |
+| courier | 5 | 0 | 14.0 | 712.7 | 1.00 | 1.00 | 1.00 | n/a | 1.00 | 100% | 6.0 | 11 |
+| upi_collect | 5 | 0 | 14.0 | 712.7 | 1.00 | 1.00 | n/a | n/a | 1.00 | 100% | 4.0 | 11 |
 
 **Limitations:** Synthetic scripts by design reveal indicators — real scammers are more evasive. Evaluation proves the pipeline works; real-world performance would need adversarial testing.
 

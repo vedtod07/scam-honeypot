@@ -153,6 +153,8 @@ def run_conversation(
     scam_type: str,
     max_turns: int = 14,
     log_path: str | None = None,
+    offline: bool = False,
+    seed: int = 0,
 ) -> dict:
     """
     Run a full simulated conversation.
@@ -160,6 +162,9 @@ def run_conversation(
     Returns dict with:
         history, indicators, signals, turns, time_wasted_seconds,
         leaks_blocked, end_reason
+
+    offline=True uses the deterministic LLM-free simulator in offline.py
+    (no API key needed); time_wasted_seconds is then SIMULATED.
     """
     # Load data files
     script_path = Path(__file__).parent / "scripts" / f"{scam_type}.json"
@@ -171,6 +176,15 @@ def run_conversation(
     with script_path.open() as f:
         script = json.load(f)
     canary = guardrail.load_canary(str(canary_path))
+
+    if offline:
+        import offline as offline_mod
+        sim = offline_mod.OfflineSim(script, seed=seed)
+        persona_fn, scammer_fn = sim.persona, sim.scammer
+    else:
+        sim = None
+        persona_fn = lambda h, c: persona_reply(h, c)  # late-bound so tests can stub
+        scammer_fn = lambda h, s: scammer_reply(h, s)
 
     # Log file
     if log_path is None:
@@ -213,7 +227,7 @@ def run_conversation(
         persona_leaked = False
 
         def _gen():
-            return persona_reply(history, canary)
+            return persona_fn(history, canary)
 
         try:
             reply = guardrail.safe_reply(_gen, canary)
@@ -243,7 +257,7 @@ def run_conversation(
 
         # --- Scammer reply ---
         try:
-            scam_msg = scammer_reply(history, script)
+            scam_msg = scammer_fn(history, script)
         except EnvironmentError:
             raise
         except Exception as exc:
@@ -286,7 +300,7 @@ def run_conversation(
         actual_turns = max_turns
 
     end_time = time.time()
-    time_wasted = end_time - start_time
+    time_wasted = sim.simulated_seconds if sim else end_time - start_time
 
     result = {
         "history": history,
@@ -297,6 +311,7 @@ def run_conversation(
         "leaks_blocked": leaks_blocked,
         "end_reason": end_reason,
         "log_path": log_path,
+        "simulated": offline,
     }
     _log({"event": "summary", **{k: v for k, v in result.items() if k != "history"}})
     return result
@@ -322,19 +337,22 @@ def _print_indicator_panel(indicators: dict):
 
 
 if __name__ == "__main__":
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")  # emoji output on Windows consoles
     if len(sys.argv) < 2 or sys.argv[1] not in _VALID_SCRIPTS:
-        print(f"Usage: python agents.py <scam_type>")
+        print(f"Usage: python agents.py <scam_type> [--offline]")
         print(f"  scam_type: one of {_VALID_SCRIPTS}")
         sys.exit(1)
 
     scam_type = sys.argv[1]
+    use_offline = "--offline" in sys.argv
     print(f"\n{'='*60}")
     print(f"  🍯 SCAM HONEYPOT — SIMULATED DEMO")
     print(f"  Script: {scam_type}")
     print(f"{'='*60}\n")
 
     try:
-        result = run_conversation(scam_type)
+        result = run_conversation(scam_type, offline=use_offline)
     except EnvironmentError as e:
         print(f"\n❌ {e}")
         sys.exit(1)
