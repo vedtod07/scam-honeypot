@@ -31,8 +31,9 @@ SCAM_TYPES = ("digital_arrest", "kyc", "courier", "upi_collect", "unknown")
 
 # Keyword context window for account numbers
 _ACCT_CONTEXT_RE = re.compile(
-    r"(?i)(?:account|a/c|ifsc|transfer).{0,40}\b(\d{9,18})\b"
-    r"|\b(\d{9,18})\b.{0,40}(?i)(?:account|a/c|ifsc|transfer)"
+    r"(?:account|a/c|ifsc|transfer).{0,40}\b(\d{9,18})\b"
+    r"|\b(\d{9,18})\b.{0,40}(?:account|a/c|ifsc|transfer)",
+    re.IGNORECASE,
 )
 
 # ---------------------------------------------------------------------------
@@ -224,16 +225,15 @@ def extract(text: str) -> dict:
     """Extract scam indicators from a message. Returns structured dict."""
     regex_result = _regex_extract(text)
 
-    # Regex-first gating: only call LLM when needed
+    # Regex-first gating: only call LLM when there are actual indicator candidates.
+    # Classification-only (no candidates) is not worth a credit spend.
     has_candidates = any([
         regex_result["upi_ids"],
         regex_result["phone_numbers"],
         regex_result["urls"],
         regex_result["account_numbers"],
     ])
-    # We also call LLM if scam_type is unknown (needs classification)
-    needs_classification = regex_result["scam_type"] == "unknown"
-    should_call_llm = has_candidates or needs_classification
+    should_call_llm = has_candidates
 
     if not should_call_llm:
         return regex_result
