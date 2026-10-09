@@ -272,3 +272,10 @@ def test_detect_signals_remote_app():
 def test_detect_signals_none():
     sigs = detect_signals("Transfer money to the account")
     assert sigs == []
+
+
+def test_phone_digits_not_account(monkeypatch):
+    _no_llm_env(monkeypatch)
+    r = extract("Call us at +91-9812345670. Transfer to account 50200012345678")
+    assert r["account_numbers"] == ["50200012345678"]
+    assert "+91-9812345670" in r["phone_numbers"]

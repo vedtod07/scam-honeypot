@@ -116,7 +116,7 @@ python eval.py --runs 3
 
 ## Evaluation
 
-> Numbers below are from regex-only extraction (no LLM), using synthetic scripts. Results prove pipeline and extraction correctness — not real-world efficacy (the scammer is our own LLM following our own script).
+> **Status: full LLM eval (`python eval.py`) has NOT been run yet** — it needs LLM credentials, so turns/time are blank and `eval_results.json` does not exist. The recall/precision values below are NOT from `eval.py`: they come from the offline pytest check that regex extraction recovers each script's planted indicators from a synthetic message (so they are expected to be 1.0 and say nothing about LLM conversations). Replace this table with `eval.py` output before submitting. Results prove pipeline and extraction correctness — not real-world efficacy (the scammer is our own LLM following our own script).
 
 | script | runs | crashes | avg turns | avg time (s) | UPI recall | phone recall | URL recall | account recall | precision (all fields) | leaks blocked |
 |---|---|---|---|---|---|---|---|---|---|---|

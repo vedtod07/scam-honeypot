@@ -37,8 +37,21 @@ SCRIPT_OPTIONS = {
     "upi_collect": "💸 UPI Collect Refund",
 }
 
+def _load_secrets_into_env() -> None:
+    """Fallback for Streamlit Cloud: env vars first, then st.secrets."""
+    import os
+    for key in ("LLM_BASE_URL", "LLM_API_KEY", "LLM_MODEL"):
+        if not os.environ.get(key):
+            try:
+                if key in st.secrets:
+                    os.environ[key] = str(st.secrets[key])
+            except Exception:
+                pass
+
+
 def _has_llm_env() -> bool:
     import os
+    _load_secrets_into_env()
     return bool(os.environ.get("LLM_BASE_URL") and os.environ.get("LLM_API_KEY"))
 
 

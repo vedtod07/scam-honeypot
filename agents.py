@@ -206,7 +206,9 @@ def run_conversation(
     all_signals.extend(signals)
     _log({"event": "extraction", "turn": 0, "result": extracted, "signals": signals})
 
+    actual_turns = 0
     for turn_num in range(1, max_turns + 1):
+        actual_turns = turn_num
         # --- Persona reply ---
         persona_leaked = False
 

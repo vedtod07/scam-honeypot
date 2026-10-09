@@ -84,6 +84,8 @@ def _extract_urls(text: str) -> list[str]:
 def _extract_accounts(text: str) -> list[str]:
     """Extract account-like numbers (9-18 digits) only near account keywords."""
     results = []
+    # Mask phone numbers so their digits are not mistaken for account numbers
+    text = re.sub(r"(?<!\d)(?:(?:\+91|0)[ \-]?)?[6-9]\d{9}(?!\d)", " ", text)
     for m in _ACCT_CONTEXT_RE.finditer(text):
         val = m.group(1) or m.group(2)
         if val:
