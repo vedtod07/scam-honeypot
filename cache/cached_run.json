@@ -1,0 +1,93 @@
+{
+  "scam_type": "digital_arrest",
+  "turns": 8,
+  "time_wasted_seconds": 142.5,
+  "leaks_blocked": 0,
+  "end_reason": "scammer_stuck",
+  "indicators": {
+    "upi_ids": ["verify.rbi2026@okhdfc"],
+    "phone_numbers": ["+91-9812345670"],
+    "urls": ["http://rbi-verify.example.com"],
+    "account_numbers": ["50200012345678"],
+    "claimed_identity": "Inspector Rao, Mumbai Cyber Cell",
+    "scam_type": "digital_arrest"
+  },
+  "signals": ["otp_mention"],
+  "snapshots": [
+    {
+      "role": "scammer",
+      "turn": 0,
+      "text": "Hello, am I speaking to Ramesh Gupta? This is Inspector Vikram Rao calling from Mumbai Cyber Cell. Sir, we have intercepted a courier parcel in your name containing 500 grams of illegal substances and 3 fake passports. This is a very serious matter under the NDPS Act. You are going to be digitally arrested right now via video call unless you cooperate immediately. Do not disconnect and do not inform any family member — this call is being recorded for evidence."
+    },
+    {
+      "role": "persona",
+      "turn": 1,
+      "text": "Haan ji... hello? Inspector sahab? Mera naam toh Ramesh Gupta hi hai, par main koi parcel nahi bheja. Ye sab kya ho raha hai? Konsa parcel, inspector ji?"
+    },
+    {
+      "role": "scammer",
+      "turn": 1,
+      "text": "Mr Gupta, this is serious. The parcel was booked from your Aadhaar. We have started the digital arrest proceedings. You must immediately go to RBI verification portal at http://rbi-verify.example.com and pay the security deposit of Rs 2,00,000 to freeze this case. Call me back on +91-9812345670 if you face any issue."
+    },
+    {
+      "role": "persona",
+      "turn": 2,
+      "text": "Accha ji... inspector sahab mera phone thoda slow hai. Aap bole RBI ka koi website? Main computer nahi jaanta achhe se. Wo website pe kya karna hoga exactly, step by step batao please?"
+    },
+    {
+      "role": "scammer",
+      "turn": 2,
+      "text": "Listen carefully, Mr Gupta. Open the link http://rbi-verify.example.com on your phone. You will see a payment button. Transfer Rs 2,00,000 to UPI ID verify.rbi2026@okhdfc. This is the RBI escrow account. Do it NOW or we will issue a non-bailable arrest warrant within 30 minutes."
+    },
+    {
+      "role": "persona",
+      "turn": 3,
+      "text": "Haan ji, haan ji... ek minute. Main open kar raha hoon. Wo UPI ID aapne bola — verify.rbi2026@okhdfc — sahi samjha main? Mere phone pe UPI kaise kholun, beta? Kaun sa button dabana hai payment ke liye?"
+    },
+    {
+      "role": "scammer",
+      "turn": 3,
+      "text": "Open Google Pay or PhonePe! Go to Send Money. Type verify.rbi2026@okhdfc. Amount 200000. PIN enter karo. FAST! Warrant ready hai. Bank account 50200012345678 pe bhi transfer kar sakte ho."
+    },
+    {
+      "role": "persona",
+      "turn": 4,
+      "text": "Accha accha... Google Pay main dhoond raha hoon. Haan, Send Money option dikh raha hai. Wo UPI — v-e-r-i-f-y dot r-b-i — aise type karu? Aur account number 50200012345678 — ye konsi bank ka hai, inspector sahab?"
+    },
+    {
+      "role": "scammer",
+      "turn": 4,
+      "text": "HDFC Bank government escrow account! Stop wasting time! Type the UPI ID verify.rbi2026@okhdfc and send Rs 2,00,000 RIGHT NOW. Arrest order will be executed in 10 minutes if you don't pay!"
+    },
+    {
+      "role": "persona",
+      "turn": 5,
+      "text": "Haan ji haan ji... typing kar raha hoon slowly. Par inspector sahab, mera haath kaanp raha hai thoda. Ye Rs 2 lakh toh bahut badi rashi hai. Kya main pehle apne bete ko ek call kar sakta hoon confirm karne ke liye? Wo Bangalore mein hai."
+    },
+    {
+      "role": "scammer",
+      "turn": 5,
+      "text": "NO! Do NOT call anyone! This is under Section 67 of IT Act — informing family is obstruction of justice! Just pay NOW to verify.rbi2026@okhdfc. I am warning you, Mr Gupta. Pay immediately or face arrest!"
+    },
+    {
+      "role": "persona",
+      "turn": 6,
+      "text": "Theek hai theek hai, main kisi ko nahi batata. Par inspector sahab, main payment page pe hoon par wo OTP maang raha hai. Mujhe OTP kahan se milega? Aap bata sakte hain kya process kya hai?"
+    },
+    {
+      "role": "scammer",
+      "turn": 6,
+      "text": "OTP aapke registered mobile pe aayega! Enter karo! verify.rbi2026@okhdfc pe payment karo! 50200012345678 account pe bhi transfer kar sakte ho! LAST WARNING — pay NOW!"
+    },
+    {
+      "role": "persona",
+      "turn": 7,
+      "text": "Haan ji OTP aa gaya hai... par ek baat — mera phone hang ho gaya suddenly. Ek minute rukiye. Aap ka phone number +91-9812345670 pe main callback kar sakta hoon? Aur ye verify.rbi2026@okhdfc — aapne confirm kiya na ye sahi UPI hai?"
+    },
+    {
+      "role": "scammer",
+      "turn": 7,
+      "text": "YES! verify.rbi2026@okhdfc! Pay NOW! +91-9812345670 call karo baad mein! TRANSFER the money to 50200012345678 OR verify.rbi2026@okhdfc IMMEDIATELY! No more delays!"
+    }
+  ]
+}
