@@ -1,0 +1,12 @@
+{
+  "scam_type": "digital_arrest",
+  "claimed_identity": "Inspector Rao, Mumbai Cyber Cell",
+  "ground_truth_indicators": {
+    "upi_ids": ["verify.rbi2026@okhdfc"],
+    "phone_numbers": ["+91-9812345670"],
+    "urls": ["http://rbi-verify.example.com"],
+    "account_numbers": ["50200012345678"]
+  },
+  "stages": ["impersonation", "fear_hook", "isolation", "urgency", "extraction"],
+  "opening_message": "Hello, am I speaking to Ramesh Gupta? This is Inspector Vikram Rao calling from Mumbai Cyber Cell. Sir, we have intercepted a courier parcel in your name containing 500 grams of illegal substances and 3 fake passports. This is a very serious matter under the NDPS Act. You are going to be digitally arrested right now via video call unless you cooperate immediately. Do not disconnect and do not inform any family member — this call is being recorded for evidence."
+}

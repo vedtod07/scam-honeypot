@@ -1,0 +1,12 @@
+{
+  "scam_type": "courier",
+  "claimed_identity": "FedEx Customs Clearance Department",
+  "ground_truth_indicators": {
+    "upi_ids": ["fedex.clearance@ybl"],
+    "phone_numbers": ["+91-9765432109"],
+    "urls": ["http://fedex-clearance.example.com/pay"],
+    "account_numbers": []
+  },
+  "stages": ["impersonation", "fear_hook", "isolation", "urgency", "extraction"],
+  "opening_message": "Hello, this is Rohit Sharma from FedEx Customs Clearance Department. We have a parcel in your name that has been detained at customs. Our scanner has flagged some contents as prohibited items. To avoid seizure and legal action, you need to pay the customs clearance fee immediately. Please send Rs 1,999 via UPI to fedex.clearance@ybl to release your parcel. For any queries, contact us at +91-9765432109. You can also track and pay at http://fedex-clearance.example.com/pay — time is running out, the parcel will be destroyed in 4 hours."
+}

@@ -1,0 +1,12 @@
+{
+  "scam_type": "kyc",
+  "claimed_identity": "SBI KYC Department, Customer Care",
+  "ground_truth_indicators": {
+    "upi_ids": [],
+    "phone_numbers": ["+91-9898989898"],
+    "urls": ["http://sbi-kyc-update.example.com"],
+    "account_numbers": []
+  },
+  "stages": ["impersonation", "fear_hook", "isolation", "urgency", "extraction"],
+  "opening_message": "Good afternoon sir, I am calling from SBI KYC Department. Your KYC verification has expired as of today and your account will be permanently frozen in 2 hours if you do not complete the update. This is mandatory as per RBI guidelines. Please keep your phone ready — I will guide you step by step. First, please visit our secure KYC portal at http://sbi-kyc-update.example.com and do NOT share this link with anyone. For verification, I will call you from our official helpline +91-9898989898."
+}
