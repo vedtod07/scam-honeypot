@@ -2,30 +2,40 @@
 
 **Track 05: AI + Cybersecurity**
 
-Total runtime target: ~2:30. Timestamps are approximate — practice once with the app warmed up.
+Total runtime target: ~3:00. Timestamps are approximate — practice once with the app warmed up.
 
 ---
 
 ## Before you record
 
 1. **Warm up the model** — run one conversation first. The first LLM call after idle has a ~20s cold start.
-2. **Never show your API key** — no terminals, no `.env`, no Featherless dashboard on screen.
-3. Record the browser tab only, 1920×1080, with your mic.
-4. The live run takes ~5–10 min; you'll **narrate over it and edit out the dead air** (or pre-run, then screen-record the finished conversation with the "Replay cached demo" mode).
-5. Plan B if the API flakes: **Offline simulator** mode — instant, no API calls.
+2. **Have the deployed link ready** — your live Streamlit Cloud app URL (used in the 2:20 beat).
+3. **Never show your API key** — no terminals, no `.env`, no Featherless dashboard on screen.
+4. Record the browser tab only, 1920×1080, with your mic.
+5. The live run takes ~5–10 min; you'll **narrate over it and edit out the dead air** (or pre-run, then screen-record the finished conversation with the "Replay cached demo" mode).
+6. Plan B if the API flakes: **Offline simulator** mode — instant, no API calls.
 
 ---
 
-## 0:00–0:20 — Hook & problem
+## 0:00–0:15 — Intro
 
-**On screen:** Title slide or the app's landing page (red SIMULATED banner visible).
+**On screen:** Title card: "Scam Honeypot — ForgeHacks 2026, Track 05: AI + Cybersecurity" + your name/team.
 
 **Say:**
-> "Every day in India, thousands of people — most of them elderly — lose their life savings to phone scams: fake police arrests, KYC fraud, courier threats. In 2024 alone, Indians lost over ₹11,000 crore to cyber fraud. The scammers win because they're fast, automated, and relentless. What if we could fight back — with AI on our side?"
+> "Hi, I'm [name], and this is Scam Honeypot — an AI-powered decoy that wastes scammers' time and harvests their fraud infrastructure for law enforcement. Here's the problem it solves."
 
 ---
 
-## 0:20–0:55 — Setup
+## 0:15–0:35 — Problem
+
+**On screen:** Keep title card or show the app's landing page (red SIMULATED banner visible).
+
+**Say:**
+> "Every day in India, thousands of people — most of them elderly — lose their life savings to phone scams: fake police arrests, KYC fraud, courier threats. In 2024 alone, Indians lost over ₹11,000 crore to cyber fraud. And it's getting worse: scammers now use AI to make thousands of calls a day. They win because they're fast, automated, and relentless. So we asked: what if AI fought back — at the same scale?"
+
+---
+
+## 0:35–1:10 — Setup & concept
 
 **On screen:** Sidebar. Point at each control as you mention it.
 
@@ -34,13 +44,13 @@ Total runtime target: ~2:30. Timestamps are approximate — practice once with t
 
 **Do:**
 - Pick **Digital Arrest** from the Scam Script dropdown.
-- Point out Mode is **Live (LLM)** — "real AI agents talking to each other, powered by Qwen2.5-72B through Featherless."
+- Point out Mode is **Live (LLM)** — "two real LLM agents talking to each other, powered by Qwen2.5-72B through Featherless."
 - Point at the red banner: **"This is a simulated demo. No real scammer, no real data — safety first."**
 - Click **▶ Start**.
 
 ---
 
-## 0:55–1:40 — The live conversation
+## 1:10–1:55 — The live conversation
 
 **On screen:** Conversation bubbles appear (🦹 scammer / 👴 persona), Time Wasted ticker running.
 
@@ -55,7 +65,7 @@ Total runtime target: ~2:30. Timestamps are approximate — practice once with t
 
 ---
 
-## 1:40–2:10 — The payoff: intel & report
+## 1:55–2:20 — The payoff: intel & report
 
 **On screen:** Scroll to **Collected Intel** panel, then **Generated Report**.
 
@@ -68,7 +78,18 @@ Total runtime target: ~2:30. Timestamps are approximate — practice once with t
 
 ---
 
-## 2:10–2:30 — How it works + outro
+## 2:20–2:40 — Why it matters + live deployment
+
+**On screen:** Browser switches to (or shows the URL of) your deployed Streamlit app.
+
+**Say:**
+> "This isn't just a cool demo. Every minute a scammer spends on Ramesh is a minute they're not scamming a real victim. The indicators we collect — UPI IDs, phone numbers, phishing domains — can be fed straight into bank blocklists and caller-protection systems. And the report gives cybercrime cells exactly what they need to act on a complaint.
+>
+> Best part: it's already live. The whole thing is deployed on Streamlit Community Cloud — free to host, and the app reads its secrets from the platform, so my API key never touches the codebase. Anyone with the link can run a simulation right now."
+
+---
+
+## 2:40–3:00 — Architecture + outro
 
 **On screen:** Keep the report visible; optionally a simple architecture diagram.
 
