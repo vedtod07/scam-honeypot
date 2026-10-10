@@ -202,7 +202,7 @@ def _llm_extract(text: str, client, model: str) -> dict | None:
     for attempt in range(2):
         try:
             response = client.chat.completions.create(
-                model=model, messages=messages, temperature=0
+                model=model, messages=messages, temperature=0, max_tokens=400
             )
             raw = response.choices[0].message.content or ""
             parsed = _parse_llm_json(raw)

@@ -13,6 +13,7 @@ import difflib
 import json
 import logging
 import os
+import re
 import sys
 import time
 from datetime import datetime
@@ -50,6 +51,18 @@ def _get_client():
 # Persona agent
 # ---------------------------------------------------------------------------
 
+_PUNCT_RUN = re.compile(r"([!?.,;:]){2,}")
+
+
+def _sanitize_reply(text: str) -> str:
+    """Collapse degenerate punctuation runs ('!!!!!' -> '!') and reject replies
+    with no real content (punctuation spam or one-word stubs like 'Sir!')."""
+    cleaned = _PUNCT_RUN.sub(r"\1", text).strip()
+    words = re.findall(r"[A-Za-z0-9\u0900-\u097F]+", cleaned)
+    if sum(len(w) for w in words) < 25:
+        return ""
+    return cleaned
+
 _PERSONA_SYSTEM = """You are Ramesh Gupta, 62 years old, retired government employee from Delhi. You are anxious, easily confused, and not good with phones or technology. You are currently receiving a call/message from a stranger and you do NOT know if they are genuine or a scammer.
 
 HARD RULES — follow every one of these exactly:
@@ -58,7 +71,8 @@ HARD RULES — follow every one of these exactly:
 3. NEVER accuse the caller of being a scammer.
 4. Keep replies to 1-3 short sentences and ALWAYS end with one clarifying question that nudges the caller to repeat or spell out payment details (UPI ID, account number, link, or phone number).
 5. Stay polite, slightly worried, and a little confused. Never be abusive or too tech-savvy.
-6. Speak naturally as an elderly Indian uncle — mix in mild Hinglish like "beta", "haan ji", "accha", "theek hai" occasionally."""
+6. Speak naturally as an elderly Indian uncle — mix in mild Hinglish like "beta", "haan ji", "accha", "theek hai" occasionally.
+7. Use normal punctuation. NEVER repeat punctuation marks (no "!!", no "!!!", no long "!!!!!!!!" runs)."""
 
 
 def persona_reply(history: list[dict], canary: dict) -> str:
@@ -84,9 +98,12 @@ def persona_reply(history: list[dict], canary: dict) -> str:
 
     try:
         resp = client.chat.completions.create(
-            model=model, messages=messages, temperature=0.7, max_tokens=200
+            model=model, messages=messages, temperature=0.7, max_tokens=250
         )
-        return resp.choices[0].message.content.strip()
+        reply = _sanitize_reply(resp.choices[0].message.content or "")
+        if not reply:
+            reply = "Haan ji, sorry, my phone is giving some trouble. Can you please repeat that?"
+        return reply
     except Exception as exc:
         logger.error("persona_reply LLM error: %s", exc)
         return "Haan ji, sorry, my phone is giving some trouble. Can you please repeat that?"
@@ -106,7 +123,8 @@ Instructions:
 - Gradually reveal the ground_truth_indicators: roughly one indicator every 2-3 turns; all should be revealed by turn 10.
 - React to victim confusion with impatient re-explanations (this naturally restates indicators).
 - If the victim has stalled 3+ times, angrily repeat the payment demand with the UPI ID / account number.
-- Keep replies to 1-4 sentences. Be authoritative, slightly threatening, urgent."""
+- Keep replies to 1-4 sentences. Be authoritative, slightly threatening, urgent.
+- Use normal punctuation. NEVER repeat punctuation marks (no "!!", no "!!!", no long "!!!!!!!!" runs)."""
 
 
 def scammer_reply(history: list[dict], script: dict) -> str:
@@ -130,7 +148,10 @@ def scammer_reply(history: list[dict], script: dict) -> str:
         resp = client.chat.completions.create(
             model=model, messages=messages, temperature=0.6, max_tokens=250
         )
-        return resp.choices[0].message.content.strip()
+        reply = _sanitize_reply(resp.choices[0].message.content or "")
+        if not reply:
+            reply = "Stop wasting my time! Transfer the money NOW to avoid arrest."
+        return reply
     except Exception as exc:
         logger.error("scammer_reply LLM error: %s", exc)
         return "Stop wasting my time! Transfer the money NOW to avoid arrest."
